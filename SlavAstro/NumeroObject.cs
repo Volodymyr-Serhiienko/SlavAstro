@@ -1,4 +1,6 @@
-﻿namespace Astro
+﻿using System.Text.Json;
+
+namespace Astro
 {
     public class Christian
     {
@@ -98,13 +100,21 @@
         public override string ToString() => $"ЛѢто {Year}, {Day} {MonthName}({Month}) {DayName}, {Season}";
     }
 
-    public class DateInfo
+    public class NumeroObject
     {
         private DateTime Datetime { get; }
         
-        public DateInfo(DateTime dateTime) => Datetime = dateTime;
+        public NumeroObject(DateTime dateTime) => Datetime = dateTime;
 
         public Christian Chris { get => new(Datetime); }
         public Slavian Slav { get => new(Datetime); }
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+        }
     }
 }

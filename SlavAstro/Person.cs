@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Text.Json;
 
 namespace Astro
 {
-    public class Person : AstroObject
+    public class Person : NumeroObject
     {
         public string Firstname { get; } = "";
         public string Lastname { get; } = "";
@@ -11,7 +12,7 @@ namespace Astro
         {
             get
             {
-                int num = DateInfo.Chris.Year + DateInfo.Chris.Month + DateInfo.Chris.Day;
+                int num = Chris.Year + Chris.Month + Chris.Day;
             start:
                 int sum = 0;
                 while (num > 0)
@@ -27,7 +28,7 @@ namespace Astro
         {
             get
             {
-                int num = DateInfo.Slav.Year + DateInfo.Slav.Month + DateInfo.Slav.Day;
+                int num = Slav.Year + Slav.Month + Slav.Day;
             start:
                 int sum = 0;
                 while (num > 0)
@@ -48,5 +49,13 @@ namespace Astro
             BirthDate = datetime;
         }
         public Person() : base(DateTime.Now) { }
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+        }
     }
 }

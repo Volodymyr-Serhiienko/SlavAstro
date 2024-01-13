@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Text.Json;
 
 namespace Astro
 {
@@ -27,7 +28,7 @@ namespace Astro
             }
         }
         public Coords Coords { get => new(new AstroTime(Datetime), Coord_correction); }
-        public DateInfo DateInfo { get => new(Datetime); }
+        //public NumeroObject DateInfo { get => new(Datetime); }
         public PlanetsInfo PlanetInfo { get => new(Datetime); }
         
         public AstroObject(DateTime datetime) => Datetime = datetime;
@@ -253,5 +254,13 @@ namespace Astro
             int y = (int)(223 + 183 * Math.Sin((-coord + 65.5) * Math.PI / 180));
             return (x, y);
 		}
+
+        public override string ToString()
+        {
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+        }
     }
 }
